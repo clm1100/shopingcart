@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+   <div>商品列表</div>
+   <div>购物车组件</div>
   </div>
 </template>
 
