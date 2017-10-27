@@ -1,19 +1,26 @@
 <template>
   <div id="app">
-   <div>商品列表</div>
-   <div>购物车组件</div>
+    <Products />
+    <hr>
+    <Cart/>    
   </div>
 </template>
 
 <script>
+import Cart from './components/Cart'
+import Products from './components/Products'
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    Cart,
+    Products
+  }
 }
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
