@@ -15,7 +15,7 @@
       </button>
       </li>
     </ul>
-    <p>Total: {{ total | currency }}</p>
+    <p>Total:</p>
     <p><button>Checkout</button></p>
     <p >Checkout</p>
   </div>
