@@ -21,8 +21,8 @@
               <span>名称 <i v-text="item.name"></i></span>
               <span>价钱: <i v-text="item.price"></i></span>
               <span>个数 <i v-text="item.geshu">4</i></span>
-              <button>加一个</button>
-              <button>减一个</button>
+              <button @click="addtocart(item.id)">加一个</button>
+              <button @click="reduceTo(item.id)">减一个</button>
             </p>
           </li>
         </ul>
@@ -52,13 +52,22 @@ export default {
       this.shopList.filter((e)=>{return e.id == id})[0].shengyu-=1;
       // 购物车商品加一
       if(this.cartList.filter((e)=>{return e.id == id}).length == 0){
-        let objdanli  = Object.assign({},this.shopList.filter((e)=>{return e.id == id})[0]);
+        // let objdanli  = Object.assign({},this.shopList.filter((e)=>{return e.id == id})[0]);
+        let objdanli = JSON.parse(JSON.stringify(this.shopList.filter((e)=>{return e.id == id})[0]))
         delete objdanli.shengyu
         objdanli.geshu = 1;
         console.log(objdanli)
         this.cartList.push(objdanli);
       }else{
         this.cartList.filter((e)=>{return e.id == id})[0].geshu+=1;
+      }
+    },
+    reduceTo(id){
+      this.shopList.filter((e)=>{return e.id == id})[0].shengyu+=1;
+      if(this.cartList.filter((e)=>{return e.id == id}).length == 0){
+        return false;
+      }else{
+        this.cartList.filter((e)=>{return e.id == id})[0].geshu-=1;
       }
     }
   }
