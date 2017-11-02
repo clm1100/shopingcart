@@ -1,41 +1,58 @@
-import gooapi from '../api'
+import goodapi from '../api'
 import vue from 'vue'
 import vuex from 'vuex'
 vue.use(vuex)
 
 export default new vuex.Store({
   state: {
-    goods: [],
-    goodcart: 1
-  },
-  getters: {
-    goodlength: (state) => {
-      return state.goodcart
-    },
-    getProducts: (state) => {
-      return state.goods
-    }
+    shopList: [],
+    cartList: []
   },
   mutations: {
-    gcadd(state) {
-      state.goodcart = state.goodcart + 1
+    getshopList(state, data) {
+      state.shopList = data
     },
-    getProducts(state, all) {
-      state.goods = all
+    addtocart(state, id) {
+      // 商品总数减一
+      state.shopList.filter((e) => { return e.id === id })[0].shengyu -= 1
+      // 购物车商品加一
+      if (state.cartList.filter((e) => { return e.id === id }).length === 0) {
+        // let objdanli  = Object.assign({},this.shopList.filter((e)=>{return e.id == id})[0]);
+        let objdanli = JSON.parse(JSON.stringify(state.shopList.filter((e) => { return e.id === id })[0]))
+        delete objdanli.shengyu
+        objdanli.geshu = 1
+        state.cartList.push(objdanli)
+      } else {
+        state.cartList.filter((e) => { return e.id === id })[0].geshu += 1
+      }
     },
-    rcadd(state) {
-      state.goodcart = state.goodcart - 1
+    reduceTo(state, id) {
+      state.shopList.filter((e) => { return e.id === id })[0].shengyu += 1
+      if (state.cartList.filter((e) => { return e.id === id }).length === 0) {
+        return false
+      } else {
+        state.cartList.filter((e) => { return e.id === id })[0].geshu -= 1
+      }
+    }
+
+  },
+  getters: {
+    countPrice(state) {
+      if (state.cartList.length > 0) {
+        let a = 0
+        state.cartList.forEach((e) => {
+          a += Number(e.price) * Number(e.geshu)
+        })
+        return a
+      } else {
+        return 0
+      }
     }
   },
   actions: {
-    gcadd(context) {
-      setTimeout(function() {
-        context.commit('gcadd')
-      })
-    },
-    getProducts(context) {
-      gooapi.getProducts().then(function(data) {
-        context.commit('getProducts', data)
+    getshopList(context) {
+      goodapi.getProducts().then((data) => {
+        context.commit('getshopList', data)
       })
     }
   }

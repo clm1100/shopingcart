@@ -2,16 +2,16 @@
  * Mocking client-server processing
  */
 const _products = [
-  { 'id': 1, 'title': 'iPad 4 Mini', 'price': 500.01, 'inventory': 2},
-  { 'id': 2, 'title': 'H&M T-Shirt White', 'price': 10.99, 'inventory': 10},
-  { 'id': 3, 'title': 'Charli XCX - Sucker CD', 'price': 19.99, 'inventory': 5}
+    {id:'1',name:"苹果",price:"3",shengyu:10},
+    {id:'2',name:"梨子",price:"4",shengyu:15},
+    {id:'3',name:"香蕉",price:"5",shengyu:40},
 ]
   
 export default {
-getProducts (cb) {
-    return new Promise(function(resolve, reject){
-        resolve(_products);
-    })
-}
+    getProducts () {
+        return new Promise(function(resolve, reject){
+            resolve(_products);
+        })
+    }
 }
   

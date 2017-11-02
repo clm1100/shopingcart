@@ -30,47 +30,43 @@
     </div>
     <hr>
     <h3>
-      总价:
+      总价:{{countPrice||0}}
     </h3>
   </div>
 </template>
 <script>
+import obj from "./api";
 export default {
-  data(){
-    return {
-      shopList:[
-        {id:'1',name:"苹果",price:"3",shengyu:10},
-        {id:'2',name:"梨子",price:"4",shengyu:15},
-        {id:'3',name:"香蕉",price:"5",shengyu:40},
-      ],
-      cartList:[]
+  // data(){
+  //   return {
+  //     shopList:this.$store.state.shopList,
+  //     cartList:this.$store.state.cartList
+  //   }
+  // },
+  created(){
+    this.$store.dispatch('getshopList');
+    console.log(this.shopList)
+  },
+  computed:{
+    shopList(){
+      return this.$store.state.shopList
+    },
+    cartList(){
+      return this.$store.state.cartList
+    },
+    countPrice(){
+      return this.$store.getters.countPrice
     }
   },
   methods:{
     addtocart(id){
-      // 商品总数减一
-      this.shopList.filter((e)=>{return e.id == id})[0].shengyu-=1;
-      // 购物车商品加一
-      if(this.cartList.filter((e)=>{return e.id == id}).length == 0){
-        // let objdanli  = Object.assign({},this.shopList.filter((e)=>{return e.id == id})[0]);
-        let objdanli = JSON.parse(JSON.stringify(this.shopList.filter((e)=>{return e.id == id})[0]))
-        delete objdanli.shengyu
-        objdanli.geshu = 1;
-        console.log(objdanli)
-        this.cartList.push(objdanli);
-      }else{
-        this.cartList.filter((e)=>{return e.id == id})[0].geshu+=1;
-      }
+      this.$store.commit('addtocart',id)
     },
     reduceTo(id){
-      this.shopList.filter((e)=>{return e.id == id})[0].shengyu+=1;
-      if(this.cartList.filter((e)=>{return e.id == id}).length == 0){
-        return false;
-      }else{
-        this.cartList.filter((e)=>{return e.id == id})[0].geshu-=1;
-      }
+      this.$store.commit('reduceTo',id)
     }
   }
+  
 }
 </script>
 <style>
