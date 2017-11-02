@@ -1,115 +1,69 @@
 <template>
   <div id="app">
-    <h1>vue-todolist</h1>
-    <div class="container">
-      <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">@</span>
-        <input v-model="content" type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-        <button @click="add" type="button" class="btn btn-default">添加</button>
+    <div>
+      <ul>
+        <li v-for="item in shopList">
+          <p>
+            <span>名称 <i v-text="item.name"></i></span>
+            <span>价钱: <i v-text="item.price"></i></span>
+            <span>剩余 <i v-text="item.shengyu">4</i></span>
+            <button @click="addtocart(item.id)">加入购物车</button>
+          </p>
+        </li>
+      </ul>
+    </div>
+    <hr>
+    <div>
+      <div>
+        <ul>
+          <li v-for="item in cartList">
+            <p>
+              <span>名称 <i v-text="item.name"></i></span>
+              <span>价钱: <i v-text="item.price"></i></span>
+              <span>个数 <i v-text="item.geshu">4</i></span>
+              <button>加一个</button>
+              <button>减一个</button>
+            </p>
+          </li>
+        </ul>
       </div>
     </div>
-    <div class="container">
-      <ul class="list-group" v-if="xuanran =='all'">
-        <li v-for=" t in all" class="list-group-item">
-          <span @click="jian(t.id)" class="badge" v-bind:class="{ complete:t.complete }">完成</span>
-          {{t.content}}
-        </li>
-      </ul>
-
-      <ul class="list-group" v-else-if="xuanran == 'active'">
-        <li v-for=" t in active" class="list-group-item">
-          <span @click="jian(t.id)" class="badge" v-bind:class="{ complete:t.complete }">完成</span>
-          {{t.content}}
-        </li>
-      </ul>
-      <ul class="list-group" v-else-if="xuanran == 'complete'">
-        <li v-for=" t in complete" class="list-group-item">
-          <span @click="jian(t.id)" class="badge" v-bind:class="{ complete:t.complete }">完成</span>
-          {{t.content}}
-        </li>
-      </ul>
-    </div>
-    <div class="btn-group" role="group" aria-label="...">
-      <button @click="Aall" type="button" class="btn btn-default">全部</button>
-      <button @click="Aactive" type="button" class="btn btn-default">待完成</button>
-      <button @click="Acomplete" type="button" class="btn btn-default">已完成</button>
-      <button @click="dele" type="button" class="btn btn-default">清空已完成</button>
-
-    </div>
+    <hr>
+    <h3>
+      总价:
+    </h3>
   </div>
- 
 </template>
-
 <script>
-import 'bootstrap/dist/css/bootstrap.min.css'
-import store from "./store";
-function randomString(len) {
-　　len = len || 32;
-　　var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
-　　var maxPos = $chars.length;
-　　var pwd = '';
-　　for (let i = 0; i < len; i++) {
-　　　　pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
-　　}
-　　return pwd;
-}
-
 export default {
   data(){
     return {
-      xuanran:'all',
-      content:'',
-      todos:[
-        {id: 1, content:'待办事项',complete:false}
-       ]
+      shopList:[
+        {id:'1',name:"苹果",price:"3",shengyu:10},
+        {id:'2',name:"梨子",price:"4",shengyu:15},
+        {id:'3',name:"香蕉",price:"5",shengyu:40},
+      ],
+      cartList:[]
     }
-  },
-  computed:{
-    all: function(){return this.todos},
-    active: function() {return this.todos.filter(function(e){return !e.complete}) } ,
-    complete: function(){return this.todos.filter(function(e){return e.complete})}
   },
   methods:{
-    dele(){
-   this.todos=   this.todos.filter(function(e){
-        return !e.complete 
-      })
-    },
-    Aall(){
-     this.xuanran = 'all';
-     console.log(this.xuanran)
-    },
-    Aactive(){
-      this.xuanran = 'active'
-      console.log(this.xuanran)
-    },
-    Acomplete(){
-      this.xuanran = 'complete'
-      console.log(this.xuanran)
-    },
-    add(){
-      console.log(this.content);
-      let todo = {
-        id : randomString(32),
-        content:this.content,
-        complete:false
+    addtocart(id){
+      // 商品总数减一
+      this.shopList.filter((e)=>{return e.id == id})[0].shengyu-=1;
+      // 购物车商品加一
+      if(this.cartList.filter((e)=>{return e.id == id}).length == 0){
+        let objdanli  = Object.assign({},this.shopList.filter((e)=>{return e.id == id})[0]);
+        delete objdanli.shengyu
+        objdanli.geshu = 1;
+        console.log(objdanli)
+        this.cartList.push(objdanli);
+      }else{
+        this.cartList.filter((e)=>{return e.id == id})[0].geshu+=1;
       }
-      if(this.content){
-        this.todos.push(todo);     
-      }
-    },
-    jian(id){
-      let index = '';
-      this.todos.forEach((e,i)=>{if(e.id==id){
-        index = i
-         this.todos[index].complete = true;
-        }});
-     
     }
   }
-};
+}
 </script>
-
 <style>
-.complete {color: red;background-color: blue}
+* {margin: 0;padding:0}
 </style>
