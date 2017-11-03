@@ -60,7 +60,7 @@ export default {
   },
   methods:{
     addtocart(id){
-      this.$store.commit('addtocart',id)
+      this.$store.dispatch('actionsaddtocart',id)
     },
     reduceTo(id){
       this.$store.commit('reduceTo',id)

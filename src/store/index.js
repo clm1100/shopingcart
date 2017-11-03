@@ -54,6 +54,10 @@ export default new vuex.Store({
       goodapi.getProducts().then((data) => {
         context.commit('getshopList', data)
       })
+    },
+    actionsaddtocart(context, id) {
+      console.log('我是在dispatch中触发的')
+      context.commit('addtocart', id)
     }
   }
 })
