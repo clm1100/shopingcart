@@ -2,20 +2,16 @@
 
 > A Vue.js project
 
-## Build Setup
 
-``` bash
-# install dependencies
-npm install
+-~~纯vue实现购物车~~
 
-# serve with hot reload at localhost:8080
-npm run dev
+-~~用vuex实现购物车~~
 
-# build for production with minification
-npm run build
+-~~将购物车组件化拆分~~
 
-# build for production and view the bundle analyzer report
-npm run build --report
-```
+控制商品列表，商品数量为0，按钮不能点击或 消失
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+控制购物车商品，数量为零时此条商品不显示在购物车
+
+控制购物车商品 按钮点击商品数量为零时购物车添加按钮禁用，
+
