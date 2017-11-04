@@ -1,24 +1,44 @@
 <template>
-  <ul>
-    <li v-for="p in products">
-      <span>名称: <b>苹果</b> </span>
-      <span>价格: <b>12</b> </span>
-      <span>剩余数量: <b>14</b> </span>
-      <button>
-          加入购物车
-      </button>
-    </li>
-  </ul>
+   <div>
+      <ul>
+        <li v-for="item in shopList">
+          <p>
+            <span>名称 <i v-text="item.name"></i></span>
+            <span>价钱: <i v-text="item.price"></i></span>
+            <span>剩余 <i v-text="item.shengyu">4</i></span>
+            <button @click="addtocart(item.id)">加入购物车</button>
+          </p>
+        </li>
+      </ul>
+    </div>
 </template>
 
 <script>
 
 export default {
-  data(){ 
-        return {
-            products: [1,2,3,4,6]
-        }
+    computed:{
+    shopList(){
+      return this.$store.state.shopList
+    },
+    cartList(){
+      return this.$store.state.cartList
+    },
+    countPrice(){
+      return this.$store.getters.countPrice
     }
+  },
+    methods:{
+    addtocart(id){
+      this.$store.dispatch('actionsaddtocart',id)
+    },
+    reduceTo(id){
+      this.$store.dispatch('actionsreduceTo',id)
+    }
+  },
+  created(){
+    this.$store.dispatch('getshopList');
+    console.log(this.shopList)
+  },
 }
 </script>
 

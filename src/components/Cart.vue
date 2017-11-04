@@ -1,32 +1,39 @@
 <template>
-  <div class="cart">
-    <h2>Your Cart</h2>
-    <p><i>Please add some products to cart.</i></p>
-    <ul>
-      <li v-for="p in products">
-       <span>名称: <b>苹果</b> </span>
-      <span>价格: <b>12</b> </span>
-      <span>数量: <b>14</b> </span>
-      <button>
-          +1
-      </button>
-      <button>
-          -1
-      </button>
-      </li>
-    </ul>
-    <p>Total:</p>
-    <p><button>Checkout</button></p>
-    <p >Checkout</p>
-  </div>
+    <div>
+        <ul>
+          <li v-for="item in cartList">
+            <p>
+              <span>名称 <i v-text="item.name"></i></span>
+              <span>价钱: <i v-text="item.price"></i></span>
+              <span>个数 <i v-text="item.geshu">4</i></span>
+              <button @click="addtocart(item.id)">加一个</button>
+              <button @click="reduceTo(item.id)">减一个</button>
+            </p>
+          </li>
+        </ul>
+      </div>
 </template>
 
 <script>
 export default {
-    data(){
-        return {
-            products:[1,2,3,4,5]
-        }
+  computed: {
+    shopList() {
+      return this.$store.state.shopList;
+    },
+    cartList() {
+      return this.$store.state.cartList;
+    },
+    countPrice() {
+      return this.$store.getters.countPrice;
     }
- }
+  },
+  methods: {
+    addtocart(id) {
+      this.$store.dispatch("actionsaddtocart", id);
+    },
+    reduceTo(id) {
+      this.$store.dispatch("actionsreduceTo", id);
+    }
+  }
+};
 </script>

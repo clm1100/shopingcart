@@ -1,33 +1,8 @@
 <template>
   <div id="app">
-    <div>
-      <ul>
-        <li v-for="item in shopList">
-          <p>
-            <span>名称 <i v-text="item.name"></i></span>
-            <span>价钱: <i v-text="item.price"></i></span>
-            <span>剩余 <i v-text="item.shengyu">4</i></span>
-            <button @click="addtocart(item.id)">加入购物车</button>
-          </p>
-        </li>
-      </ul>
-    </div>
+   <Products/>
     <hr>
-    <div>
-      <div>
-        <ul>
-          <li v-for="item in cartList">
-            <p>
-              <span>名称 <i v-text="item.name"></i></span>
-              <span>价钱: <i v-text="item.price"></i></span>
-              <span>个数 <i v-text="item.geshu">4</i></span>
-              <button @click="addtocart(item.id)">加一个</button>
-              <button @click="reduceTo(item.id)">减一个</button>
-            </p>
-          </li>
-        </ul>
-      </div>
-    </div>
+  <Cart/>
     <hr>
     <h3>
       总价:{{countPrice||0}}
@@ -35,37 +10,43 @@
   </div>
 </template>
 <script>
-import obj from "./api";
+import obj from "./api"
+import Products from './components/Products.vue'
+import Cart from './components/Cart.vue'
 export default {
+  components:{
+    Products,
+    Cart
+  },
   // data(){
   //   return {
   //     shopList:this.$store.state.shopList,
   //     cartList:this.$store.state.cartList
   //   }
   // },
-  created(){
-    this.$store.dispatch('getshopList');
-    console.log(this.shopList)
-  },
+  // created(){
+  //   this.$store.dispatch('getshopList');
+  //   console.log(this.shopList)
+  // },
   computed:{
-    shopList(){
-      return this.$store.state.shopList
-    },
-    cartList(){
-      return this.$store.state.cartList
-    },
+    // shopList(){
+    //   return this.$store.state.shopList
+    // },
+    // cartList(){
+    //   return this.$store.state.cartList
+    // },
     countPrice(){
       return this.$store.getters.countPrice
     }
   },
-  methods:{
-    addtocart(id){
-      this.$store.dispatch('actionsaddtocart',id)
-    },
-    reduceTo(id){
-      this.$store.commit('reduceTo',id)
-    }
-  }
+  // methods:{
+  //   addtocart(id){
+  //     this.$store.dispatch('actionsaddtocart',id)
+  //   },
+  //   reduceTo(id){
+  //     this.$store.dispatch('actionsreduceTo',id)
+  //   }
+  // }
   
 }
 </script>

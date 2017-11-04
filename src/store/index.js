@@ -58,6 +58,10 @@ export default new vuex.Store({
     actionsaddtocart(context, id) {
       console.log('我是在dispatch中触发的')
       context.commit('addtocart', id)
+    },
+    actionsreduceTo({commit}, id) {
+      console.log('dispatch actionsreduceto')
+      commit('reduceTo', id)
     }
   }
 })
