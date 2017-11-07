@@ -21,7 +21,7 @@ export default {
       return this.$store.state.shopList;
     },
     cartList() {
-      return this.$store.state.cartList;
+      return this.$store.state.carts.cartList;
     },
     countPrice() {
       return this.$store.getters.countPrice;

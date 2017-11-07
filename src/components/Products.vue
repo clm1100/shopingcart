@@ -18,10 +18,10 @@
 export default {
     computed:{
     shopList(){
-      return this.$store.state.shopList
+      return this.$store.state.products.shopList
     },
     cartList(){
-      return this.$store.state.cartList
+      return this.$store.state.carts.cartList
     },
     countPrice(){
       return this.$store.getters.countPrice

@@ -18,6 +18,11 @@ export default {
     Products,
     Cart
   },
+    created() {
+    setTimeout(()=>{
+      this.$store.dispatch('actionsaddtocart','1')
+    },500)
+  },
   // data(){
   //   return {
   //     shopList:this.$store.state.shopList,
