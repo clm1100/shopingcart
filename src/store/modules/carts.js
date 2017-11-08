@@ -8,6 +8,7 @@ const state = {
 // getters
 const getters = {
   checkoutStatus: state => state.checkoutStatus
+  // countPrice: (state) => { }
 }
 
 // actions
@@ -17,7 +18,7 @@ const actions = {
       context.commit('getshopList', data)
     })
   },
-  actionsaddtocart(context, id) {
+  a1ctionsaddtocart(context, id) {
     console.log('我是在dispatch中触发的')
     context.commit('addtocart', id)
   },
@@ -29,7 +30,7 @@ const actions = {
 
 // mutations
 const mutations = {
-  addtocart(state, id) {
+  addToCart(state, id) {
     console.log(state)
     // 购物车商品加一
     if (state.cartList.filter((e) => { return e.id === id }).length === 0) {

@@ -29,7 +29,7 @@ export default {
   },
     methods:{
     addtocart(id){
-      this.$store.dispatch('actionsaddtocart',id)
+      this.$store.dispatch('addToCart',id)
     },
     reduceTo(id){
       this.$store.dispatch('actionsreduceTo',id)

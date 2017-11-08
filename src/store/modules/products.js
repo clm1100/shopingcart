@@ -32,7 +32,7 @@ const mutations = {
   getshopList(state, data) {
     state.shopList = data
   },
-  addtocart(state, id) {
+  addToCart(state, id) {
       // 商品总数减一
     state.shopList.filter((e) => { return e.id === id })[0].shengyu -= 1
       // 购物车商品加一
